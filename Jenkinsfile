@@ -11,7 +11,7 @@ pipeline    {
         stage("Build"){
             steps{
                 echo "Building the image"
-                sh "docker build -t umairabbasid/notes-app ."
+                sh "docker build -t notes-app ."
             }
         }
         stage("Push to Docker Hub"){
@@ -20,6 +20,7 @@ pipeline    {
                 withCredentials([usernamePassword(credentialsId:"dockerhub", passwordVariable:"dockerhubpass",usernameVariable:"dockerhubuser")]){
                 sh "docker tag notes-app ${env.dockerhubuser}/notes-app:latest"
                 sh "docker login -u ${env.dockerhubuser} -p ${env.dockerhubpass}"
+    
                 sh "docker push umairabbasid/notes-app"
                 }
                 
